@@ -1,4 +1,4 @@
-import { ApiKey, ApiKeySourceType, RestApi, UsagePlan } from 'aws-cdk-lib/aws-apigateway';
+import { ApiKey, ApiKeySourceType, LambdaIntegration, RestApi, UsagePlan } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as cdk from 'aws-cdk-lib/core';
@@ -42,5 +42,19 @@ export class AwsEvaluacionPracticaStack extends cdk.Stack {
     });
 
     dbTable.grantReadWriteData(serviceLambda);
+
+    const books = api.root.addResource('book');
+    const book = books.addResource('{id}');
+
+    const lambdaIntegration = new LambdaIntegration(serviceLambda);
+
+    books.addMethod('POST', lambdaIntegration, {
+      apiKeyRequired: true
+    });
+
+    book.addMethod('GET', lambdaIntegration, {
+      apiKeyRequired: true
+    });
+
   }
 }
