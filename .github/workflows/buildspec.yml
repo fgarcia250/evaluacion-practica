@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  aws_cdk:
+  preparing_environment:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
