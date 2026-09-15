@@ -17,7 +17,7 @@ export async function getBook(id: string){
     if(!result.Item)
         return {
             statusCode: 404,
-            body: JSON.stringify({ message: `Libro con id ${id} no encontrado.`})
+            body: JSON.stringify({ message: `Libro con id ${id} no encontrado. Validar codigo.`})
         };
 
     return {
